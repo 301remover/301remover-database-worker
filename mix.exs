@@ -29,8 +29,9 @@ defmodule DatabaseWorker.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:freddy, "~> 0.15.0"},
-      {:excoveralls, "~> 0.6", only: :test}
+      {:elmdb, "~> 0.4.1"},
+      {:excoveralls, "~> 0.6", only: :test},
+      {:freddy, "~> 0.15.0"}
     ]
   end
 end
