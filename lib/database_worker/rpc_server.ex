@@ -1,5 +1,6 @@
 defmodule DatabaseWorker.RPCServer do
   use Freddy.RPC.Server
+  alias DatabaseWorker.Storage
 
   import Freddy.RPC.Server, only: [ack: 1, reply: 2]
 
@@ -20,6 +21,10 @@ defmodule DatabaseWorker.RPCServer do
 
   @impl true
   def handle_request(request, meta, state) do
-    {:noreply, state}
+    shortener = meta[:routing_key]
+    resolved = Storage.get_url(shortener, request)
+
+    ack(meta)
+    {:reply, resolved, state}
   end
 end
