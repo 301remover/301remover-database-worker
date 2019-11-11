@@ -6,8 +6,11 @@ defmodule DatabaseWorker.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec
+
     children = [
-      {DatabaseWorker.Storage, ["./test-db"]}
+      {DatabaseWorker.Storage, ["./test-db"]},
+      worker(DatabaseWorker.AmqpConnection, [])
     ]
 
     opts = [strategy: :one_for_one, name: DatabaseWorker.Supervisor]
