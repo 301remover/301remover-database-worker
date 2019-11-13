@@ -25,3 +25,5 @@ database_worker-*.tar
 /log
 
 /.elixir_ls
+
+/301remover-db
