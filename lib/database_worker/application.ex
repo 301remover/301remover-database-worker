@@ -8,8 +8,10 @@ defmodule DatabaseWorker.Application do
   def start(_type, _args) do
     import Supervisor.Spec
 
+    database_path = Application.get_env(:database_worker, :lmdb)[:database_path]
+
     children = [
-      {DatabaseWorker.Storage, ["./test-db"]},
+      {DatabaseWorker.Storage, [database_path]},
       worker(DatabaseWorker.AmqpConnection, [])
     ]
 
