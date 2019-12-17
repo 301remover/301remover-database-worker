@@ -6,8 +6,13 @@ defmodule DatabaseWorker.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec
+
+    database_path = Application.get_env(:database_worker, :lmdb)[:database_path]
+
     children = [
-      {DatabaseWorker.Storage, ["./test-db"]}
+      {DatabaseWorker.Storage, [database_path]},
+      worker(DatabaseWorker.AmqpConnection, [])
     ]
 
     opts = [strategy: :one_for_one, name: DatabaseWorker.Supervisor]

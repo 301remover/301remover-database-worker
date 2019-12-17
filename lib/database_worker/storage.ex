@@ -43,4 +43,8 @@ defmodule DatabaseWorker.Storage do
     Exmdb.put(env, shortcode, url, db: shortener)
     {:reply, nil, env}
   end
+
+  defp handle_link(%{"res" => res, "env" => env}) do
+    Task.async(DatabaseWorker.RPCServer, :reply, [DatabaseWorker.RPCServer, res, env])
+  end
 end
