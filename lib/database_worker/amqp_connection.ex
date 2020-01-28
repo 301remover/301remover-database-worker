@@ -5,9 +5,11 @@ defmodule DatabaseWorker.AmqpConnection do
     unless "#{Mix.env()}" === "test" do
       {:ok, conn} = Freddy.Connection.start_link(params)
       {:ok, _server} = DatabaseWorker.RPCServer.start_link(conn)
+      {:ok, _client} = DatabaseWorker.RPCClient.start_link(conn)
     else
       {:ok, conn} = Freddy.Connection.start_link(adapter: :sandbox)
       {:ok, _server} = MockServer.start_link(conn)
+      {:ok, _client} = MockClient.start_link(conn)
     end
   end
 end
