@@ -28,7 +28,7 @@ defmodule DatabaseWorker.RPCServer do
     resolved =
       case resolved do
         nil ->
-          task = Task.async(RpcClient, :request, [RpcClient, shortener, request])
+          task = Task.async(RPCClient, :request, [RPCClient, shortener, request])
 
           case Task.await(task) do
             {:ok, i} ->
