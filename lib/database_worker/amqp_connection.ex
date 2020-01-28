@@ -9,6 +9,7 @@ defmodule DatabaseWorker.AmqpConnection do
     else
       {:ok, conn} = Freddy.Connection.start_link(adapter: :sandbox)
       {:ok, _server} = MockServer.start_link(conn)
+      {:ok, _client} = MockClient.start_link(conn)
     end
   end
 end

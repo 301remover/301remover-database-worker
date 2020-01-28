@@ -37,7 +37,6 @@ defmodule DatabaseWorker.RPCServer do
 
             {:error, msg} ->
               # TODO: Return an error thru RPC to the server
-              IO.puts(msg)
               nil
           end
 
