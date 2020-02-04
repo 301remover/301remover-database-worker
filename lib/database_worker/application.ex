@@ -10,8 +10,10 @@ defmodule DatabaseWorker.Application do
 
     database_path = Application.get_env(:database_worker, :lmdb)[:database_path]
 
+    domains = ["bit.ly", "goo.gl", "tinyurl.com"]
+
     children = [
-      {DatabaseWorker.Storage, [database_path]},
+      {DatabaseWorker.Storage, [%{path: database_path, domains: domains}]},
       worker(DatabaseWorker.AmqpConnection, [])
     ]
 
