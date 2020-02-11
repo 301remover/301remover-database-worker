@@ -18,18 +18,15 @@ defmodule DatabaseWorker.Storage do
   # Server (callbacks)
 
   @impl true
-  def init(path) do
-    # TODO: these domain names should be fetched from the server
-    dbs = %{
-      "bit.ly" => [],
-      "tinyurl.com" => [],
-      "adf.ly" => []
-    }
+  def init([%{path: path, domains: domains}]) do
+    dbs =
+      domains
+      |> Map.new(fn domain -> {domain, []} end)
 
     # always force creation of the enviroment so new DBs can be added. this
     # will not delete the existing DB, it will only recreate the
     # config.exmdb file
-    Exmdb.create(path, force: true, dbs: dbs)
+    Exmdb.create([path], force: true, dbs: dbs)
   end
 
   @impl true
